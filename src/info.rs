@@ -226,4 +226,14 @@ mod tests {
         let info = req.connection_info();
         assert_eq!(info.scheme(), "https");
     }
+
+    #[test]
+    fn test_with_extensions_mut() {
+        let req = TestRequest::default()
+            .header(X_FORWARDED_PROTO, "https")
+            .to_http_request();
+        let info = req.connection_info();
+        req.extensions_mut().insert(());
+        assert_eq!(info.scheme(), "https");
+    }
 }
